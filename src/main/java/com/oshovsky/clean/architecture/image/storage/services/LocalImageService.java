@@ -4,6 +4,7 @@ import com.oshovsky.clean.architecture.image.storage.configuration.ApplicationPr
 import com.oshovsky.clean.architecture.image.storage.models.GetImageWrapper;
 import com.oshovsky.clean.architecture.image.storage.models.SaveFileWrapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,11 +16,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Profile("local")
 @RequiredArgsConstructor
-public class ImageService {
+public class LocalImageService implements FileService {
 
     private final ApplicationProperties properties;
 
+    @Override
     public Optional<SaveFileWrapper> storeImage(MultipartFile image) {
         try {
             UUID uuid = UUID.randomUUID();
@@ -32,6 +35,7 @@ public class ImageService {
         }
     }
 
+    @Override
     public Optional<GetImageWrapper> getImage(UUID uuid) {
         try {
             Path directory = Path.of(properties.getLocal().getDirectory(), uuid.toString());

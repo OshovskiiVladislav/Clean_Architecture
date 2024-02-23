@@ -1,7 +1,7 @@
 package com.oshovsky.clean.architecture.image.storage.controllers;
 
 import com.oshovsky.clean.architecture.image.storage.models.SaveFileWrapper;
-import com.oshovsky.clean.architecture.image.storage.services.ImageService;
+import com.oshovsky.clean.architecture.image.storage.services.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/images")
 public class ImageController {
 
-    private final ImageService imageService;
+    private final FileService imageService;
 
     @PostMapping
     public ResponseEntity<UUID> storeNewImage(@RequestAttribute MultipartFile image) {

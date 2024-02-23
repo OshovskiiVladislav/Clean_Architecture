@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationProperties {
 
     private Local local;
+    private YandexCloud yandexCloud;
 
     @Getter
     @Setter
@@ -19,4 +20,15 @@ public class ApplicationProperties {
         private String directory;
     }
 
+    @Getter
+    @Setter
+    public static class YandexCloud {
+        private String serviceEndpoint;
+        private String signingRegion;
+        private String accessKey;
+        private String secretKey;
+        private String bucketName;
+    }
+
 }
+

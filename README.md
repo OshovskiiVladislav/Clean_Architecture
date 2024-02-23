@@ -1,28 +1,20 @@
 # Clean Architecture. 
-## Image Storage Service. The first iteration
-The simplest and most straightforward monolith.
+## Image Storage Service. The second iteration
 
-**Functional requirements:**</br>
-1. Uploading and saving images.
-2. Give the image by ID.
+**NEW Functional requirements:**</br>
 
-**Dependencies:**</br>
-* Spring Boot
-* Lombok
+The service should be able to switch between uploading to disk and to the cloud at our request.</br>
 
-**Controllers:**</br>
-* *ImageController*:</br>
-  Retrieves the file and returns it by UUID
+**Solution:**</br>
 
-**Services**</br>
-* *ImageService:*
-  1. Getting the file and saving it to disk in the "Content" folder.
-  2. Returns the file by ID.
+We have created a FileService interface that can save a file and give it back.
+And created 2 implementations: LocalImageService, YandexCloudService. </br>
 
-**Postman**</br>
-* Saving a file:</br>
-![postman_1.png](docs/postman_1.png)
+An implementation for saving a file locally. This is the same as it was in the first iteration.
+The second implementation is uploading and uploading to Yandex in the "cloud" profile.</br>
 
-* Getting the file:</br>
-![postman_1.png](docs/postman_2.png)
+**Disadvantages:**</br>
 
+* All our Jars, that is, those who want to interact only with Yandex, will be required to interact with Local, 
+  store the code to save to the local file system and vice versa.
+* If we add functionality to save videos or other files, then our service will grow to a huge size.
