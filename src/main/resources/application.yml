@@ -1,0 +1,9 @@
+image-storage:
+  local:
+    directory: ./content
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
