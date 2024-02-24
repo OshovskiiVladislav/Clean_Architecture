@@ -9,6 +9,17 @@
         <module name="image-storage" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="microservice-api-webmvc-spi-local-filesystem" target="17" />
+      <module name="microservice-api-webmvc-spi-yandex-cloud" target="17" />
+      <module name="storage-api" target="17" />
+      <module name="storage-api-webmvc" target="17" />
+      <module name="storage-common" target="17" />
+      <module name="storage-core" target="17" />
+      <module name="storage-spi" target="17" />
+      <module name="storage-spi-local-filesystem" target="17" />
+      <module name="storage-spi-yandex-cloud" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
