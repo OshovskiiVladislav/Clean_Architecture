@@ -1,0 +1,15 @@
+image-storage:
+  service-endpoint: *********
+  signing-region:   *********
+  access-key:       *********
+  secret-key:       *********
+  bucket-name:      *********
+
+server:
+  port: 8080
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
