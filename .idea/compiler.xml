@@ -6,13 +6,30 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="image-storage" />
+        <module name="storage-spi" />
+        <module name="storage-api" />
+        <module name="storage-spi-local-filesystem" />
+        <module name="storage-spi-yandex-cloud" />
+        <module name="storage-common" />
+        <module name="storage-core" />
+        <module name="microservice-api-webmvc-spi-local-filesystem" />
+        <module name="microservice-api-webmvc-spi-yandex-cloud" />
+        <module name="storage-api-webmvc" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="image-storage" options="-parameters" />
+      <module name="microservice-api-webmvc-spi-local-filesystem" options="-parameters" />
+      <module name="microservice-api-webmvc-spi-yandex-cloud" options="-parameters" />
+      <module name="storage-api" options="-parameters" />
+      <module name="storage-api-webmvc" options="-parameters" />
+      <module name="storage-common" options="-parameters" />
+      <module name="storage-core" options="-parameters" />
+      <module name="storage-spi" options="-parameters" />
+      <module name="storage-spi-local-filesystem" options="-parameters" />
+      <module name="storage-spi-yandex-cloud" options="-parameters" />
     </option>
   </component>
 </project>

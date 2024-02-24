@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -11,9 +12,22 @@
         <relativePath/>
     </parent>
 
+    <packaging>pom</packaging>
     <groupId>com.oshovskii</groupId>
     <artifactId>image-storage</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>microservice-api-webmvc-spi-local-filesystem</module>
+        <module>microservice-api-webmvc-spi-yandex-cloud</module>
+        <module>storage-api</module>
+        <module>storage-api-webmvc</module>
+        <module>storage-common</module>
+        <module>storage-core</module>
+        <module>storage-spi</module>
+        <module>storage-spi-local-filesystem</module>
+        <module>storage-spi-yandex-cloud</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -23,25 +37,6 @@
         <spring-framework-bom.version>6.1.3</spring-framework-bom.version>
         <aws-java-sdk-bom.version>1.12.646</aws-java-sdk-bom.version>
     </properties>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-    </dependencies>
 
     <dependencyManagement>
         <dependencies>
