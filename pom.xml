@@ -18,15 +18,15 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>microservice-api-webmvc-spi-local-filesystem</module>
-        <module>microservice-api-webmvc-spi-yandex-cloud</module>
         <module>storage-api</module>
-        <module>storage-api-webmvc</module>
-        <module>storage-common</module>
-        <module>storage-core</module>
         <module>storage-spi</module>
+        <module>storage-core</module>
+        <module>storage-common</module>
+        <module>storage-api-webmvc</module>
         <module>storage-spi-local-filesystem</module>
         <module>storage-spi-yandex-cloud</module>
+        <module>microservice-api-webmvc-spi-local-filesystem</module>
+        <module>microservice-api-webmvc-spi-yandex-cloud</module>
     </modules>
 
     <properties>

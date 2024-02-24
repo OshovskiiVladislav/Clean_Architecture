@@ -1,13 +1,14 @@
 package com.oshovskii.clean.architecture.image.storage.spi.local.filesystem;
 
-import com.oshovskii.clean.architecture.image.storage.models.GetImageWrapper;
-import com.oshovskii.clean.architecture.image.storage.models.SaveFileWrapper;
+import com.oshovskii.clean.architecture.image.storage.models.GetImageRequest;
+import com.oshovskii.clean.architecture.image.storage.models.GetImageResponse;
+import com.oshovskii.clean.architecture.image.storage.models.SaveFileRequest;
+import com.oshovskii.clean.architecture.image.storage.models.SaveFileResponse;
 import com.oshovskii.clean.architecture.image.storage.spi.FileServiceSpi;
 import com.oshovskii.clean.architecture.image.storage.spi.local.filesystem.properties.FileSystemProperties;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.io.InputStreamResource;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
@@ -22,29 +23,27 @@ public class LocalFileSystemService implements FileServiceSpi {
     }
 
     @Override
-    public Optional<SaveFileWrapper> storeImage(MultipartFile image) {
-        try {
+    public Optional<SaveFileResponse> storeImage(SaveFileRequest request) {
+        try (InputStream in = request.inputStream()){
             UUID uuid = UUID.randomUUID();
             Path directory = Files.createDirectories(Path.of(properties.getDirectory(), uuid.toString()));
-            Path file = Path.of(directory.toString(), image.getOriginalFilename());
-            Files.write(file, image.getBytes());
-            return Optional.of(new SaveFileWrapper(uuid));
+            Path file = Path.of(directory.toString(), request.originalFilename());
+            Files.copy(in, file);
+            return Optional.of(new SaveFileResponse(uuid));
         } catch (IOException e) {
             return Optional.empty();
         }
     }
 
     @Override
-    public Optional<GetImageWrapper> getImage(UUID uuid) {
+    public Optional<GetImageResponse> getImage(GetImageRequest request) {
         try {
-            Path directory = Path.of(properties.getDirectory(), uuid.toString());
+            Path directory = Path.of(properties.getDirectory(), request.uuid().toString());
             if (Files.exists(directory)) {
                 Path file = directory.toFile().listFiles()[0].toPath();
                 String mimeType = Files.probeContentType(file);
-                return Optional.of(new GetImageWrapper(
-                        new InputStreamResource(Files.newInputStream(file)),
-                        file.getFileName().toString(),
-                        mimeType)
+                return Optional.of(
+                        new GetImageResponse(Files.newInputStream(file), file.getFileName().toString(), mimeType)
                 );
             }
             return Optional.empty();

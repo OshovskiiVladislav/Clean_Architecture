@@ -1,16 +1,16 @@
 package com.oshovskii.clean.architecture.image.storage.api;
 
-import com.oshovskii.clean.architecture.image.storage.models.GetImageWrapper;
-import com.oshovskii.clean.architecture.image.storage.models.SaveFileWrapper;
-import org.springframework.web.multipart.MultipartFile;
+import com.oshovskii.clean.architecture.image.storage.models.GetImageRequest;
+import com.oshovskii.clean.architecture.image.storage.models.GetImageResponse;
+import com.oshovskii.clean.architecture.image.storage.models.SaveFileRequest;
+import com.oshovskii.clean.architecture.image.storage.models.SaveFileResponse;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public interface FileServiceApi {
 
-    Optional<SaveFileWrapper> storeImage(MultipartFile file);
+    Optional<SaveFileResponse> storeImage(SaveFileRequest request);
 
-    Optional<GetImageWrapper> getImage(UUID uuid);
+    Optional<GetImageResponse> getImage(GetImageRequest request);
 
 }

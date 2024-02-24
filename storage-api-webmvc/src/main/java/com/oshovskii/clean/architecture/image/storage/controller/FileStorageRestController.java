@@ -1,7 +1,10 @@
 package com.oshovskii.clean.architecture.image.storage.controller;
 
 import com.oshovskii.clean.architecture.image.storage.api.FileServiceApi;
-import com.oshovskii.clean.architecture.image.storage.models.SaveFileWrapper;
+import com.oshovskii.clean.architecture.image.storage.models.GetImageRequest;
+import com.oshovskii.clean.architecture.image.storage.models.SaveFileRequest;
+import com.oshovskii.clean.architecture.image.storage.models.SaveFileResponse;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +26,10 @@ public class FileStorageRestController {
     @PostMapping
     public ResponseEntity<UUID> storeNewImage(@RequestAttribute MultipartFile image) {
         try {
-            return fileServiceApi.storeImage(image)
-                    .map(SaveFileWrapper::uuid)
+            return fileServiceApi.storeImage(new SaveFileRequest(
+                    image.getInputStream(), image.getOriginalFilename(), image.getSize(), image.getContentType()
+                    ))
+                    .map(SaveFileResponse::uuid)
                     .map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
@@ -34,10 +39,10 @@ public class FileStorageRestController {
 
     @GetMapping("/{uuid}")
     public ResponseEntity<Resource> getImageByUuid(@PathVariable("uuid") UUID imageUuid) {
-        return fileServiceApi.getImage(imageUuid)
+        return fileServiceApi.getImage(new GetImageRequest(imageUuid))
                 .map(wrapper -> ResponseEntity.ok()
                         .contentType(MediaType.parseMediaType(wrapper.mimeType()))
-                        .body(wrapper.resource()))
+                        .body((Resource) new InputStreamResource(wrapper.inputStream())))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 

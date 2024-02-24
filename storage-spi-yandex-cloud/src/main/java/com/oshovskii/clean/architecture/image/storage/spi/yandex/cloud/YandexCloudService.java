@@ -1,12 +1,12 @@
 package com.oshovskii.clean.architecture.image.storage.spi.yandex.cloud;
 
-import com.oshovskii.clean.architecture.image.storage.models.GetImageWrapper;
-import com.oshovskii.clean.architecture.image.storage.models.SaveFileWrapper;
+import com.oshovskii.clean.architecture.image.storage.models.GetImageRequest;
+import com.oshovskii.clean.architecture.image.storage.models.GetImageResponse;
+import com.oshovskii.clean.architecture.image.storage.models.SaveFileRequest;
+import com.oshovskii.clean.architecture.image.storage.models.SaveFileResponse;
 import com.oshovskii.clean.architecture.image.storage.spi.FileServiceSpi;
 import com.oshovskii.clean.architecture.image.storage.spi.yandex.cloud.client.YandexCloudClient;
 import com.oshovskii.clean.architecture.image.storage.spi.yandex.cloud.client.presentation.CloudObjectWrapper;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -20,24 +20,22 @@ public class YandexCloudService implements FileServiceSpi {
     }
 
     @Override
-    public Optional<SaveFileWrapper> storeImage(MultipartFile image) {
+    public Optional<SaveFileResponse> storeImage(SaveFileRequest request) {
         try {
-            UUID uuid = yandexClient.saveObjectInCloud(image);
-            return Optional.of(new SaveFileWrapper(uuid));
+            UUID uuid = yandexClient.saveObjectInCloud(request);
+            return Optional.of(new SaveFileResponse(uuid));
         } catch (Exception e) {
             return Optional.empty();
         }
     }
 
     @Override
-    public Optional<GetImageWrapper> getImage(UUID uuid) {
+    public Optional<GetImageResponse> getImage(GetImageRequest request) {
         try {
-            CloudObjectWrapper objectWrapper = yandexClient.getObjectFromCloud(uuid);
-            return Optional.of(new GetImageWrapper(
-                    new InputStreamResource(objectWrapper.inputStream()),
-                    objectWrapper.filename(),
-                    objectWrapper.contentType())
-            );
+            CloudObjectWrapper objectWrapper = yandexClient.getObjectFromCloud(request.uuid());
+            return Optional.of(new GetImageResponse(
+                    objectWrapper.inputStream(), objectWrapper.filename(), objectWrapper.contentType()
+            ));
         } catch (Exception e) {
             return Optional.empty();
         }

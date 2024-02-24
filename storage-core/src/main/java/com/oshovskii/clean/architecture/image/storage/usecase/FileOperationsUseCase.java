@@ -1,13 +1,13 @@
 package com.oshovskii.clean.architecture.image.storage.usecase;
 
 import com.oshovskii.clean.architecture.image.storage.api.FileServiceApi;
+import com.oshovskii.clean.architecture.image.storage.models.GetImageRequest;
+import com.oshovskii.clean.architecture.image.storage.models.GetImageResponse;
+import com.oshovskii.clean.architecture.image.storage.models.SaveFileRequest;
+import com.oshovskii.clean.architecture.image.storage.models.SaveFileResponse;
 import com.oshovskii.clean.architecture.image.storage.spi.FileServiceSpi;
-import com.oshovskii.clean.architecture.image.storage.models.GetImageWrapper;
-import com.oshovskii.clean.architecture.image.storage.models.SaveFileWrapper;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public class FileOperationsUseCase implements FileServiceApi {
 
@@ -18,13 +18,13 @@ public class FileOperationsUseCase implements FileServiceApi {
     }
 
     @Override
-    public Optional<SaveFileWrapper> storeImage(MultipartFile file) {
-        return fileServiceSpi.storeImage(file);
+    public Optional<SaveFileResponse> storeImage(SaveFileRequest request) {
+        return fileServiceSpi.storeImage(request);
     }
 
     @Override
-    public Optional<GetImageWrapper> getImage(UUID uuid) {
-        return fileServiceSpi.getImage(uuid);
+    public Optional<GetImageResponse> getImage(GetImageRequest request) {
+        return fileServiceSpi.getImage(request);
     }
 
 }
